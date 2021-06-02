@@ -11,7 +11,7 @@ function TopBar(props) {
             <span className="App-tittle">InsLite</span>
             {
                 isLoggedIn ?
-                    <LogoutOutlined className='logout' onclick={handleLogout}/>
+                    <LogoutOutlined className='logout' onClick={handleLogout}/>
                     :
                     null
             }

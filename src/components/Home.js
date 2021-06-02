@@ -1,18 +1,20 @@
 import React, {useState, useEffect} from "react";
 import {Tabs, message, Row, Col, Button} from "antd";
 import axios from "axios";
+
 import SearchBar from "./SearchBar";
 import PhotoGallery from "./PhotoGallery";
+import CreatePostButton from "./CreatePostButton";
 import {SEARCH_KEY, BASE_URL, TOKEN_KEY} from "../constants";
 
 const {TabPane} = Tabs;
 
 function Home(props) {
   const [posts, setPost] = useState([])
-  const [activeTab, setActiveTab] = useState('image')
+  const [activeTab, setActiveTab] = useState("image")
   const [searchOption, setSearchOption] = useState({
     type: SEARCH_KEY.all,
-    keyword: ''
+    keyword: ""
   })
 
   const handleSearch = (option) => {
@@ -67,6 +69,7 @@ function Home(props) {
         .filter((item) => item.type === "image")
         .map((image) => {
           return {
+            postId: image.id,
             src: image.url,
             user: image.user,
             caption: image.message,
@@ -94,22 +97,32 @@ function Home(props) {
       )
     }
   };
-  const operations = <Button>Upload</Button>
+
+  const showPost = (type) => {
+    console.log("type -> ", type);
+    setActiveTab(type);
+    setTimeout(() => {
+      setSearchOption({ type: SEARCH_KEY.all, keyword: "" });
+    }, 3000);
+  };
+
+  const operations = <CreatePostButton onShowPost={showPost} />;
+
   return (
-    <div className='home'>
+    <div className="home">
       <SearchBar handleSearch={handleSearch}/>
       <div className='display'>
         <Tabs
           onChange={(key) => setActiveTab(key)}
-          defaultActiveKey='image'
+          defaultActiveKey="image"
           activeKey={activeTab}
           tabBarExtraContent={operations}
         >
-          <TabPane tab='images' key='images'>
-            {renderPosts('images')}
+          <TabPane tab="Images" key="image">
+            {renderPosts("image")}
           </TabPane>
-          <TabPane tab='videos' key='videos'>
-            {renderPosts('videos')}
+          <TabPane tab="Videos" key="video">
+            {renderPosts("video")}
           </TabPane>
         </Tabs>
       </div>

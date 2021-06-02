@@ -1,9 +1,10 @@
-import React, {Component, useState, useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import PropTypes from 'prop-types'
 import Gallery from 'react-grid-gallery';
 import {BASE_URL, TOKEN_KEY} from "../constants";
 import axios from "axios";
-import {message} from "antd";
+import {message, Button} from "antd";
+import {DeleteOutlined} from '@ant-design/icons';
 
 const captionStyle = {
   backgroundColor: "rgba(0, 0, 0, 0.6)",
